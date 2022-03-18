@@ -1,0 +1,8 @@
+---
+- name: My playbook
+  hosts: all
+  tasks:
+     - name: Update sources
+       command: sudo apt update
+     - name: Upgrade packages
+       command: sudo apt upgrade -y
