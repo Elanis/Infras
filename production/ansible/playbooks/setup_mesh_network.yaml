@@ -1,0 +1,29 @@
+---
+- name: Check every tool is installed
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+  - name: Install linux-headers-generic
+    ansible.builtin.package:
+      name: linux-headers-generic
+      state: present
+
+  - name: Install wireguard
+    ansible.builtin.package:
+      name: wireguard
+      state: present
+
+  - name: Copy configuration
+    ansible.builtin.copy:
+      src: ../../wireguard/output/{{ inventory_hostname }}.conf 
+      dest: /etc/wireguard/wg0.conf
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Enable service
+    ansible.builtin.service:
+      name: wg-quick@wg0
+      state: started
+      enabled: yes
