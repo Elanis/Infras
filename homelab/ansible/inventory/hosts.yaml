@@ -4,7 +4,7 @@ all:
       ansible_host: 192.168.0.48
       ansible_user: pi
     pi4_01:
-      ansible_host: 192.168.0.13
+      ansible_host: 192.168.0.12
       ansible_user: pi
     pi4_02:
       ansible_host: 192.168.0.49
