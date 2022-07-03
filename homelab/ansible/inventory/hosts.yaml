@@ -1,11 +1,11 @@
 all:
   hosts:
     pi3_01:
-      ansible_host: 192.168.0.48
+      ansible_host: 192.168.0.130
       ansible_user: pi
     pi4_01:
-      ansible_host: 192.168.0.12
+      ansible_host: 192.168.0.140
       ansible_user: pi
     pi4_02:
-      ansible_host: 192.168.0.49
+      ansible_host: 192.168.0.141
       ansible_user: pi
