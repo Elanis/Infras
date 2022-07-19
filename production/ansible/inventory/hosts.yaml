@@ -1,5 +1,8 @@
 all:
-  hosts:
-    helium.dysnomia.studio:
-    lithium.dysnomia.studio:
-    beryllium.dysnomia.studio:
+  children:
+    public_ip:
+      hosts:
+        helium.dysnomia.studio:
+        lithium.dysnomia.studio:
+        beryllium.dysnomia.studio:
+        bore.dysnomia.studio:
