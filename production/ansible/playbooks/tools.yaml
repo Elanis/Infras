@@ -1,20 +1,17 @@
 ---
 - name: Check every tool is installed
-  hosts: all
+  hosts: public_ip
   become: true
   become_user: root
   tasks:
-  - name: Install htop
-    ansible.builtin.package:
-      name: htop
-      state: present
+  - name: Update apt repo and cache on all servers
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
 
-  - name: Install nano
+  - name: Install tools
     ansible.builtin.package:
-      name: nano
+      name: "{{ item }}"
       state: present
-
-  - name: Install tmux
-    ansible.builtin.package:
-      name: tmux
-      state: present
+    loop:
+      - htop
+      - nano
+      - tmux
