@@ -1,0 +1,257 @@
+- name: Setup firewall rules
+  hosts: public_ip
+  become: true
+  become_user: root
+  tasks:
+    - name: Flush existing firewall rules
+      iptables:
+        flush: true
+
+    - name: Allow all loopback traffic (INPUT)
+      iptables:
+        action: append
+        chain: INPUT
+        in_interface: lo
+        jump: ACCEPT
+
+    - name: Allow all loopback traffic (FORWARD)
+      iptables:
+        action: append
+        chain: FORWARD
+        in_interface: lo
+        jump: ACCEPT
+
+    - name: Allow all wireguard mesh network traffic (INPUT)
+      iptables:
+        action: append
+        chain: INPUT
+        in_interface: wg0
+        jump: ACCEPT
+
+    - name: Allow all wireguard mesh network traffic (FORWARD)
+      iptables:
+        action: append
+        chain: FORWARD
+        in_interface: wg0
+        jump: ACCEPT
+
+    - name: Allow related and established connections (INPUT)
+      ansible.builtin.iptables:
+        chain: INPUT
+        ctstate: ESTABLISHED,RELATED
+        jump: ACCEPT
+
+    - name: Allow related and established connections (OUTPUT)
+      ansible.builtin.iptables:
+        chain: OUTPUT
+        ctstate: ESTABLISHED,RELATED
+        jump: ACCEPT
+
+    # Ping
+    - name: Allow ping traffic
+      iptables:
+        chain: INPUT
+        jump: ACCEPT
+        protocol: icmp
+
+    - name: Allow ping traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        jump: ACCEPT
+        protocol: icmp
+
+    # SSH
+    - name: Allow port 22/SSH traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '22'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 22/SSH traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '22'
+        jump: ACCEPT
+        protocol: tcp        
+
+    # FTP (to access to SoYouStart backup servers)
+    - name: Allow port 21/FTP traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '21'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 20/FTP traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '20'
+        jump: ACCEPT
+        protocol: tcp
+
+    # DNS
+    - name: Allow port 53/DNS traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '53'
+        jump: ACCEPT
+        protocol: udp
+
+    # Web
+    - name: Allow port 80/HTTP traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 80/HTTP traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 443/HTTPS traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 443/HTTPS traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: tcp
+
+    # Mail Server
+    # Not opening 110 (POP3) / 995 (POP3S) as we don't use it
+    - name: Allow port 25/SMTP traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '25'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 25/SMTP traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '25'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 465/SMTPS traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '465'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 465/SMTPS traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '465'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 587/SMTP traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '587'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 587/SMTP traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '587'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 143/IMAP traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '143'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 143/IMAP traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '143'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 993/IMAPS traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '993'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 993/IMAPS traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '993'
+        jump: ACCEPT
+        protocol: tcp
+
+    # VPN
+    - name: Allow port 1194/VPN traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '1194'
+        jump: ACCEPT
+        protocol: udp
+
+    # NTP
+    - name: Allow port 123/NTP traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '123'
+        jump: ACCEPT
+        protocol: udp
+
+    # Wireguard
+    - name: Allow wireguard listener port (51820) (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '51820'
+        jump: ACCEPT
+        protocol: udp 
+
+    - name: Allow wireguard listener port (51820) (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '51820'
+        jump: ACCEPT
+        protocol: udp
+
+    # K3S
+    - name: Allow port traffic on 127.0.0.1
+      iptables:
+        chain: OUTPUT
+        destination: 127.0.0.1
+        jump: ACCEPT
+        protocol: tcp 
+
+    - name: Allow port traffic on 192.168.1.0/24
+      iptables:
+        chain: OUTPUT
+        destination: 192.168.1.0/24
+        jump: ACCEPT
+        protocol: tcp 
+
+    # Drop other traffic
+    - name: Drop any traffic without rule (INPUT)
+      iptables:
+        chain: INPUT
+        jump: DROP
+
+    - name: Drop any traffic without rule (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        jump: DROP
