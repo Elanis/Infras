@@ -1,6 +1,6 @@
 ---
 - name: Check every tool is installed
-  hosts: public_ip
+  hosts: private_ip
   become: true
   become_user: root
   tasks:
