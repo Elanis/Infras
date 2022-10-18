@@ -22,8 +22,10 @@
       group: root
       mode: '0644'
 
-  - name: Enable service
+  - name: Restart service
     ansible.builtin.service:
       name: wg-quick@wg0
-      state: started
+      state: restarted
       enabled: yes
+
+  # TODO: use handler to prevent restarting for no reason
