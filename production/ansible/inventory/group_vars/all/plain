@@ -1,0 +1,15 @@
+ansible_user: "{{ vaulted_ansible_user }}"
+
+# Cluster token
+ha_k3s_token: "{{ vaulted_k3s_token }}"
+
+# The location of where to capture the kube config of the new cluster
+# Relative paths are relative to the playbook directory.
+cluster_config: cluster.conf
+
+ha_enabled: true
+ha_cluster_vip: 192.168.50.0
+ha_cluster_method: kube-vip
+
+# Use the latest k3s version instead of 'stable'
+install_k3s_channel: 'latest'

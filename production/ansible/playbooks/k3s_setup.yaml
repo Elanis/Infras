@@ -1,0 +1,34 @@
+---
+
+- name: Prepare hosts for k3s installation
+  hosts: k3s_cluster
+  gather_facts: yes
+  become: yes
+  roles:
+    - role: config-check
+      run_once: true
+    - role: prereq
+    - role: download
+    - role: raspberrypi
+
+- name: Install the k3s servers
+  hosts: k3s_server
+  gather_facts: no
+  become: yes
+  roles:
+    - role: k3s/server
+
+- name: Fetch cluster config and wait for control-plane before setting up agents
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  roles:
+    - role: cluster-config
+
+- name: Install the k3s agents
+  hosts: k3s_agent
+  gather_facts: no
+  become: yes
+  roles:
+    - role: k3s/agent
+

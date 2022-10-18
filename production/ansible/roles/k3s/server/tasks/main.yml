@@ -1,0 +1,126 @@
+---
+
+################################################################################
+# Setup servers in cluster using k3s-init
+#
+
+- name: Initialize k3s HA embedded database, etcd
+  include_role:
+    name: "ha/etcd"
+  when: ha_enabled
+
+################################################################################
+# Setup k3s service
+#
+
+- name: Copy K3s service file
+  register: k3s_service
+  template:
+    src: "k3s.service.j2"
+    dest: "{{ systemd_dir }}/k3s.service"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+
+- name: Enable and check K3s service
+  systemd:
+    name: k3s
+    daemon_reload: "{{ 'yes' if k3s_service.changed else 'no' }}"
+    state:  "{{ 'restarted' if k3s_service.changed else 'started' }}"
+    enabled: yes
+
+################################################################################
+# node-token tasks
+#
+
+- name: Wait for node-token
+  wait_for:
+    path: "{{ data_dir }}/server/node-token"
+
+- name: Read node-token from the server
+  slurp:
+    path: "{{ data_dir }}/server/node-token"
+  register: node_token
+
+- name: Store the server node-token
+  set_fact:
+    token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
+
+################################################################################
+# Create ctl commands
+#
+
+- name: Copy k3s.sh for symlink'd commands
+  register: k3s_symlink
+  template:
+    src: "k3s.sh.j2"
+    dest: "{{ bin_dir }}/k3s.sh"
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  when:
+    - data_dir is defined
+    - data_dir != '/var/lib/rancher/k3s'
+
+- name: Determine k3s bin target
+  set_fact:
+    k3s_bin_target: "{{ '{{ bin_dir }}/k3s.sh' if data_dir != '/var/lib/rancher/k3s' else '{{ bin_dir }}/k3s' | default('{{ bin_dir }}/k3s') }}"
+
+- name: Create symlink'd commands (kubectl, crictl, ctr)
+  file:
+    src: "{{ k3s_bin_target }}"
+    dest: "{{ bin_dir }}/{{ item }}"
+    state: link
+  with_items:
+    - kubectl
+    - crictl
+    - ctr
+
+################################################################################
+# Setup {{ ansible_user }}/.kube/config
+#
+
+- name: Create local kube directory, {{ path }}
+  vars:
+    path: "~{{ ansible_user }}/.kube"
+  file:
+    path: "{{ path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    mode: "u=rwx,g=rx,o="
+
+- name: Copy kubeconfig file, {{ src }}, to {{ dest }}
+  vars:
+    src: "/etc/rancher/k3s/k3s.yaml"
+    dest: "~{{ ansible_user }}/.kube/config"
+  copy:
+    src: "{{ src }}"
+    dest: "{{ dest }}"
+    remote_src: yes
+    owner: "{{ ansible_user }}"
+    mode: "u=rw,g=,o="
+
+# Fetch a copy of the cluster config for use in one's ~/.kube/config.
+# The playbook will update the IP address using the cluster-config role.
+- name: Fetch {{ src }} for use in one's ~/.kube/config
+  vars:
+    src: "/etc/rancher/k3s/k3s.yaml"
+  fetch:
+    src: "{{ src }}"
+    dest: "{{ k3s_cluster_config }}.tmp"
+    flat: yes
+  run_once: true
+  changed_when: false
+
+##########################
+# Set up HA cluster method
+
+- name: Setup HA cluster method, {{ k3s_cluster_method | default('n/a') }}
+  vars:
+    role: "ha/{{ k3s_cluster_method }}"
+  include_role:
+    name: "{{ role }}"
+  when:
+    - ha_enabled
+    - k3s_cluster_method != 'external'
+

@@ -1,0 +1,15 @@
+---
+
+# TODO: How do we use the first_server node-token instead of k3s_token?
+
+server_init_args: >-
+  {% if ansible_host == first_server %}
+    --cluster-init
+    --tls-san {{ apiserver_endpoint }}
+  {% else %}
+    --server https://{{ first_server }}:6443
+  {% endif %}
+  --token {{ k3s_token }}
+  --node-ip={{ ansible_ssh_host }}
+  {{ extra_server_args | default('') }}
+

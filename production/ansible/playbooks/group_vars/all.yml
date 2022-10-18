@@ -1,0 +1,40 @@
+---
+# These variables are not meant to be changed.
+# All changes should happen in "inventory/x/group_vars/all.yml".
+
+k3s_version: "{{ install_k3s_version | default('undefined') }}"
+k3s_commit: "{{ install_k3s_commit | default('undefined') }}"
+
+k3s_channel_url: "{{ install_k3s_channel_url | default('https://update.k3s.io/v1-release/channels') }}"
+k3s_channel: "{{ install_k3s_channel | default('stable') }}"
+
+extra_server_args: "{{ install_k3s_server_args | default('') }}"
+extra_agent_args: "{{ install_k3s_agent_args | default('') }}"
+
+systemd_dir: "{{ install_k3s_systemd_dir | default('/etc/systemd/system') }}"
+bin_dir: "{{ install_k3s_bin_dir | default('/usr/local/bin') }}"
+data_dir: "{{ install_k3s_data_dir | default('/var/lib/rancher/k3s') }}"
+
+first_server: "{{ hostvars[groups['k3s_server'][0]]['ansible_host'] | default(groups['k3s_server'][0]) }}"
+apiserver_endpoint: "{{ (ha_cluster_vip | mandatory) if (ha_enabled | default(false)) else first_server }}"
+
+k3s_cluster_config: "{{ cluster_config | default('cluster.conf') }}"
+k3s_cluster_method: "{{ ha_cluster_method | default('keepalived') }}"
+
+k3s_token: "{{ ha_k3s_token | default('MySuperSecureToken') }}"
+
+# Services information
+k3s_services:
+  - k3s
+  - k3s-agent
+
+k3s_service_file_extensions:
+  - service
+  - service.env
+
+# Supported HA Cluster Methods
+k3s_cluster_methods:
+  - external
+  - kube-vip
+  - keepalived
+
