@@ -7,7 +7,7 @@
 
 # These are commonly changed values for kube-vip.
 kube_vip_version: 'v0.4.0'
-kube_vip_interface: "{{ ansible_default_ipv4.interface }}"
+kube_vip_interface: 'wg0'
 
 # These are less commonly changed values for kube-vip.
 kube_vip_cidr: '32'
