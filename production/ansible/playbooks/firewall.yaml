@@ -99,6 +99,13 @@
         protocol: udp
 
     # Web
+    - name: Allow port 80/HTTP traffic (FORWARD)
+      iptables:
+        chain: FORWARD
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: tcp
+
     - name: Allow port 80/HTTP traffic (INPUT)
       iptables:
         chain: INPUT
@@ -110,6 +117,13 @@
       iptables:
         chain: OUTPUT
         destination_port: '80'
+        jump: ACCEPT
+        protocol: tcp
+
+    - name: Allow port 443/HTTPS traffic (FORWARD)
+      iptables:
+        chain: FORWARD
+        destination_port: '443'
         jump: ACCEPT
         protocol: tcp
 
@@ -126,6 +140,7 @@
         destination_port: '443'
         jump: ACCEPT
         protocol: tcp
+
 
     # Mail Server
     # Not opening 110 (POP3) / 995 (POP3S) as we don't use it
@@ -231,33 +246,67 @@
         protocol: udp
 
     # K3S
-    - name: Allow all traffic on 127.0.0.1
+    - name: Allow all traffic on 127.0.0.0/24
       iptables:
         chain: OUTPUT
-        destination: 127.0.0.1
+        destination: 127.0.0.0/24
         jump: ACCEPT
-        protocol: tcp 
 
     - name: Allow all traffic on 192.168.1.0/24
       iptables:
         chain: OUTPUT
         destination: 192.168.1.0/24
         jump: ACCEPT
-        protocol: tcp 
-
-    - name: Allow all traffic on 192.168.1.0/24
-      iptables:
-        chain: OUTPUT
-        destination: 192.168.1.0/24
-        jump: ACCEPT
-        protocol: udp 
 
     - name: Allow all traffic on 192.168.50.0/24
       iptables:
         chain: OUTPUT
         destination: 192.168.50.0/24
         jump: ACCEPT
-        protocol: tcp 
+
+    - name: Allow all traffic on 10.0.0.0/8 (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination: 10.0.0.0/8
+        jump: ACCEPT
+
+    - name: Allow all traffic on 10.0.0.0/8 (INPUT)
+      iptables:
+        chain: FORWARD
+        destination: 10.0.0.0/8
+        jump: ACCEPT
+
+    - name: Allow all traffic on 10.0.0.0/8 (FORWARD)
+      iptables:
+        chain: FORWARD
+        destination: 10.0.0.0/8
+        jump: ACCEPT
+
+    # Flannel
+    - name: Allow all traffic from helium (94.23.197.186) (INPUT)
+      iptables:
+        chain: INPUT
+        source: 94.23.197.186
+        jump: ACCEPT
+
+    - name: Allow all traffic from lithium (138.201.58.15) (INPUT)
+      iptables:
+        chain: INPUT
+        source: 138.201.58.15
+        jump: ACCEPT
+
+    - name: Allow all traffic from beryllium (51.75.131.105) (INPUT)
+      iptables:
+        chain: INPUT
+        source: 51.75.131.105
+        jump: ACCEPT
+
+    - name: Allow flannel listener port (8472) (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '8472'
+        jump: ACCEPT
+        protocol: udp
 
     # Drop other traffic
     - name: Drop any traffic without rule (INPUT)
