@@ -108,13 +108,6 @@
         protocol: udp
 
     # Web
-    - name: Allow port 80/HTTP traffic (FORWARD)
-      iptables:
-        chain: FORWARD
-        destination_port: '80'
-        jump: ACCEPT
-        protocol: tcp
-
     - name: Allow port 80/HTTP traffic (INPUT)
       iptables:
         chain: INPUT
@@ -126,13 +119,6 @@
       iptables:
         chain: OUTPUT
         destination_port: '80'
-        jump: ACCEPT
-        protocol: tcp
-
-    - name: Allow port 443/HTTPS traffic (FORWARD)
-      iptables:
-        chain: FORWARD
-        destination_port: '443'
         jump: ACCEPT
         protocol: tcp
 
@@ -279,37 +265,7 @@
         destination: 10.0.0.0/8
         jump: ACCEPT
 
-    - name: Allow all traffic on 10.0.0.0/8 (INPUT)
-      iptables:
-        chain: FORWARD
-        destination: 10.0.0.0/8
-        jump: ACCEPT
-
-    - name: Allow all traffic on 10.0.0.0/8 (FORWARD)
-      iptables:
-        chain: FORWARD
-        destination: 10.0.0.0/8
-        jump: ACCEPT
-
     # Flannel
-    - name: Allow all traffic from helium (94.23.197.186) (INPUT)
-      iptables:
-        chain: INPUT
-        source: 94.23.197.186
-        jump: ACCEPT
-
-    - name: Allow all traffic from lithium (138.201.58.15) (INPUT)
-      iptables:
-        chain: INPUT
-        source: 138.201.58.15
-        jump: ACCEPT
-
-    - name: Allow all traffic from beryllium (51.75.131.105) (INPUT)
-      iptables:
-        chain: INPUT
-        source: 51.75.131.105
-        jump: ACCEPT
-
     - name: Allow flannel listener port (8472) (OUTPUT)
       iptables:
         chain: OUTPUT

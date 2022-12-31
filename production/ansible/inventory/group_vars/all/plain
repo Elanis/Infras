@@ -13,6 +13,7 @@ ha_cluster_method: kube-vip
 
 # Use the latest k3s version instead of 'stable'
 install_k3s_channel: 'latest'
+install_k3s_server_args: '--flannel-iface=wg0'
 
 # ArgoCD
 argocd_admin_password: "{{ vaulted_argocd_admin_password }}"
