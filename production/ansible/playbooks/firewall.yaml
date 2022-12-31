@@ -138,7 +138,7 @@
 
 
     # Mail Server
-    # Not opening 110 (POP3) / 995 (POP3S) as we don't use it
+    # Not opening 110 (POP3) / 995 (POP3S) as we don't use them
     - name: Allow port 25/SMTP traffic (INPUT)
       iptables:
         chain: INPUT
@@ -208,14 +208,6 @@
         destination_port: '993'
         jump: ACCEPT
         protocol: tcp
-
-    # VPN
-    - name: Allow port 1194/VPN traffic (INPUT)
-      iptables:
-        chain: INPUT
-        destination_port: '1194'
-        jump: ACCEPT
-        protocol: udp
 
     # NTP
     - name: Allow port 123/NTP traffic (OUTPUT)
