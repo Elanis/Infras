@@ -19,20 +19,26 @@
         install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
         rm argocd-linux-amd64
 
-    - name: Get initial admin password
-      shell: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-      register: initial_password
-
-    - name: Wait for pods to start 
+    - name: Wait for pods to start (Running state)
       shell: kubectl get pods -n argocd | grep -v "Running"
-      register: list_pods
+      register: list_running_pods
       retries: 10
-      until: list_pods.stdout_lines | list | count == 1
+      until: list_running_pods.stdout_lines | list | count == 1
+
+    - name: Wait for pods to start (Replicas)
+      shell: kubectl get pods -n argocd | grep "0/1"
+      register: list_running_replicas
+      retries: 10
+      until: list_running_replicas.stdout_lines | list | count == 1
 
     - name: Temporary enable port-forwarding
       command: kubectl port-forward svc/argocd-server -n argocd 8080:443
       async: 120 # Maximum allowed time in Seconds
       poll: 0 # Polling Interval in Seconds
+
+    - name: Get initial admin password
+      shell: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+      register: initial_password
 
     - name: Login and set admin password
       shell: |
