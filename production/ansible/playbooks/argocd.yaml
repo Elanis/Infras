@@ -46,6 +46,11 @@
     - name: Create namespace if needed
       shell:  kubectl create namespace dysnomia-apps || true
 
+    - name: Grant access to Github Packages
+      shell: |
+        kubectl delete secret github || true
+        kubectl create secret docker-registry -n dysnomia-apps github --docker-server=ghcr.io --docker-username={{ argocd_github_username }} --docker-password={{ argocd_github_token }} --docker-email={{ argocd_github_mail }}
+
     - name: Create apps
       shell: |
         kubectl config set-context --current --namespace=argocd
