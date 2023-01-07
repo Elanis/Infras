@@ -1,0 +1,17 @@
+---
+- name: Check every tool is installed
+  hosts: private_ip
+  become: true
+  become_user: root
+  tasks:
+  - name: Install fail2ban
+    ansible.builtin.package:
+      name: "fail2ban"
+      state: present
+  - name: Copy fail2ban configuration
+    ansible.builtin.copy:
+      src: defaults-debian.conf
+      dest: /etc/fail2ban/jail.d/defaults-debian.conf
+      owner: root
+      group: root
+      mode: '0644'
