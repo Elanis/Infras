@@ -14,6 +14,26 @@
         insertafter=EOF
         create=True
 
+    - name: Add grafana-dashboard alias on servers
+      lineinfile:
+        path=/root/.bashrc
+        line="alias grafana-dashboard=\"kubectl port-forward -n dysnomia-apps \\"$(kubectl get pods -n dysnomia-apps | grep '^pgwatch-' | awk '{print $1}')\\" 3000:3000 --address='192.168.1.3'\""
+        owner=root
+        regexp='^alias grafana-dashboard='
+        state=present
+        insertafter=EOF
+        create=True
+
+    - name: Add pgwatch-admin alias on servers
+      lineinfile:
+        path=/root/.bashrc
+        line="alias pgwatch-admin=\"kubectl port-forward -n dysnomia-apps \\"$(kubectl get pods -n dysnomia-apps | grep '^pgwatch-' | awk '{print $1}')\\" 8081:8080 --address='192.168.1.3'\""
+        owner=root
+        regexp='^alias pgwatch-admin='
+        state=present
+        insertafter=EOF
+        create=True
+
     - name: Add traefik-dashboard alias on servers
       lineinfile:
         path=/root/.bashrc
