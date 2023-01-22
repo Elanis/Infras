@@ -44,30 +44,63 @@
         in_interface: wg0
         jump: ACCEPT
 
-    - name: Allow related and established connections (INPUT)
+    - name: Allow related and established connections (INPUT) - ipv4
       ansible.builtin.iptables:
         chain: INPUT
         ctstate: ESTABLISHED,RELATED
         jump: ACCEPT
+        ip_version: ipv4
 
-    - name: Allow related and established connections (OUTPUT)
+    - name: Allow related and established connections (OUTPUT) - ipv4
       ansible.builtin.iptables:
         chain: OUTPUT
         ctstate: ESTABLISHED,RELATED
         jump: ACCEPT
+        ip_version: ipv4
 
-    # Ping
-    - name: Allow ping traffic
+    - name: Allow related and established connections (INPUT) - ipv6
+      ansible.builtin.iptables:
+        chain: INPUT
+        ctstate: ESTABLISHED,RELATED
+        jump: ACCEPT
+        ip_version: ipv6
+
+    - name: Allow related and established connections (OUTPUT) - ipv6
+      ansible.builtin.iptables:
+        chain: OUTPUT
+        ctstate: ESTABLISHED,RELATED
+        jump: ACCEPT
+        ip_version: ipv6
+
+    # Ping - ipv4
+    - name: Allow ping traffic (INPUT) - ipv4
       iptables:
         chain: INPUT
         jump: ACCEPT
         protocol: icmp
+        ip_version: ipv4
 
-    - name: Allow ping traffic (OUTPUT)
+    - name: Allow ping traffic (OUTPUT) - ipv4
       iptables:
         chain: OUTPUT
         jump: ACCEPT
         protocol: icmp
+        ip_version: ipv4
+
+    # Ping - ipv6
+    - name: Allow ping traffic (INPUT) - ipv6
+      iptables:
+        chain: INPUT
+        jump: ACCEPT
+        protocol: icmp
+        ip_version: ipv6
+
+    - name: Allow ping traffic (OUTPUT) - ipv6
+      iptables:
+        chain: OUTPUT
+        jump: ACCEPT
+        protocol: icmp
+        ip_version: ipv6        
 
     # SSH
     - name: Allow port 22/SSH traffic (INPUT)
@@ -107,13 +140,47 @@
         jump: ACCEPT
         protocol: udp
 
-    # Web
-    - name: Allow port 80/HTTP traffic (INPUT)
+    # Web - ipv4
+    - name: Allow port 80/HTTP traffic (INPUT) - ipv4
       iptables:
         chain: INPUT
         destination_port: '80'
         jump: ACCEPT
         protocol: tcp
+        ip_version: ipv4
+
+    - name: Allow port 80/HTTP traffic (OUTPUT) - ipv4
+      iptables:
+        chain: OUTPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: tcp
+        ip_version: ipv4
+
+    - name: Allow port 443/HTTPS traffic (INPUT) - ipv4
+      iptables:
+        chain: INPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: tcp
+        ip_version: ipv4
+
+    - name: Allow port 443/HTTPS traffic (OUTPUT) - ipv4
+      iptables:
+        chain: OUTPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: tcp
+        ip_version: ipv4
+
+    # Web - ipv6
+    - name: Allow port 80/HTTP traffic (INPUT) - ipv4
+      iptables:
+        chain: INPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: tcp
+        ip_version: ipv6
 
     - name: Allow port 80/HTTP traffic (OUTPUT)
       iptables:
@@ -121,6 +188,7 @@
         destination_port: '80'
         jump: ACCEPT
         protocol: tcp
+        ip_version: ipv6
 
     - name: Allow port 443/HTTPS traffic (INPUT)
       iptables:
@@ -128,6 +196,7 @@
         destination_port: '443'
         jump: ACCEPT
         protocol: tcp
+        ip_version: ipv6
 
     - name: Allow port 443/HTTPS traffic (OUTPUT)
       iptables:
@@ -135,7 +204,7 @@
         destination_port: '443'
         jump: ACCEPT
         protocol: tcp
-
+        ip_version: ipv6
 
     # Mail Server
     # Not opening 110 (POP3) / 995 (POP3S) as we don't use them
@@ -210,12 +279,21 @@
         protocol: tcp
 
     # NTP
-    - name: Allow port 123/NTP traffic (OUTPUT)
+    - name: Allow port 123/NTP traffic (OUTPUT) - ipv4
       iptables:
         chain: OUTPUT
         destination_port: '123'
         jump: ACCEPT
         protocol: udp
+        ip_version: ipv4
+
+    - name: Allow port 123/NTP traffic (OUTPUT) - ipv6
+      iptables:
+        chain: OUTPUT
+        destination_port: '123'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv6
 
     # Wireguard
     - name: Allow wireguard listener port (51820) (INPUT)
@@ -266,12 +344,26 @@
         protocol: udp
 
     # Drop other traffic
-    - name: Drop any traffic without rule (INPUT)
+    - name: Drop any traffic without rule (INPUT) - ipv4
       iptables:
         chain: INPUT
         jump: DROP
+        ip_version: ipv4
 
-    - name: Drop any traffic without rule (OUTPUT)
+    - name: Drop any traffic without rule (OUTPUT) - ipv4
       iptables:
         chain: OUTPUT
         jump: DROP
+        ip_version: ipv4
+
+    - name: Drop any traffic without rule (INPUT) - ipv6
+      iptables:
+        chain: INPUT
+        jump: DROP
+        ip_version: ipv6
+
+    - name: Drop any traffic without rule (OUTPUT) - ipv6
+      iptables:
+        chain: OUTPUT
+        jump: DROP
+        ip_version: ipv6
