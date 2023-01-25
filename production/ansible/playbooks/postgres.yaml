@@ -92,6 +92,26 @@
         insertafter=EOF
         create=True
 
+    - name: (Config) Enable pg_stat_statements
+      lineinfile:
+        path=/etc/postgresql/15/main/postgresql.conf
+        line="shared_preload_libraries = 'pg_stat_statements'"
+        owner=postgres
+        regexp='^shared_preload_libraries ='
+        state=present
+        insertafter=EOF
+        create=True
+
+    - name: (Config) Enable track_io_timing
+      lineinfile:
+        path=/etc/postgresql/15/main/postgresql.conf
+        line="track_io_timing = on"
+        owner=postgres
+        regexp='^track_io_timing  ='
+        state=present
+        insertafter=EOF
+        create=True
+
     - name: (Config) Enable archive mode
       lineinfile:
         path=/etc/postgresql/15/main/postgresql.conf
