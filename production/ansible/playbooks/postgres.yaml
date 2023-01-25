@@ -30,6 +30,7 @@
         state: present
       loop:
         - postgresql-15
+        - python3-psutil
         - python3-psycopg2
         - postgresql-plpython3-15
         - pgbackrest
