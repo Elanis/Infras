@@ -1,5 +1,12 @@
 ---
 
+- name: Install deps
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - open-iscsi # Needed for longhorn
+
 - name: Prepare hosts for k3s installation
   hosts: k3s_cluster
   gather_facts: yes

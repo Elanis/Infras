@@ -9,7 +9,7 @@
         path=/root/.bashrc
         line="alias argocd-dashboard=\"kubectl port-forward -n argocd svc/argocd-server 8080:443 --address='192.168.1.3'\""
         owner=root
-        regexp='^alias traefik-dashboard='
+        regexp='^alias argocd-dashboard='
         state=present
         insertafter=EOF
         create=True
@@ -20,6 +20,16 @@
         line="alias grafana-dashboard=\"kubectl port-forward -n kube-system \\"$(kubectl get pods -n kube-system | grep '^grafana-' | awk '{print $1}')\\" 3000:3000 --address='192.168.1.3'\""
         owner=root
         regexp='^alias grafana-dashboard='
+        state=present
+        insertafter=EOF
+        create=True
+
+    - name: Add longhorn-dashboard alias on servers
+      lineinfile:
+        path=/root/.bashrc
+        line="alias longhorn-dashboard=\"kubectl port-forward -n longhorn-system svc/longhorn-frontend 8082:80 --address='192.168.1.3'\""
+        owner=root
+        regexp='^alias longhorn-dashboard='
         state=present
         insertafter=EOF
         create=True
