@@ -1,0 +1,39 @@
+---
+- hosts: postgres_backup_servers
+  become: yes
+
+  tasks:
+    - name: Create a backup user
+      user:
+        name: backup
+        groups:
+         - backup
+        state: present
+        shell: /bin/bash
+        system: no
+        createhome: yes
+        home: /opt/backups
+
+    - name: Creates directory
+      file:
+        path: /opt/backups/postgres
+        state: directory
+        owner: backup
+        group: backup
+        mode: 0700
+
+    - name: Copy backup.sh
+      ansible.builtin.copy:
+        src: backup.sh
+        dest: /opt/backups/backup.sh
+        owner: backup
+        group: backup
+        mode: 0700
+
+    - name: Setup CRON backup
+      ansible.builtin.cron:
+        name: "Run postgres backup"
+        minute: "30"
+        hour: "{{ hostvars[inventory_hostname].postgres_backup_cron_hour }}"
+        user: "root"
+        job: "bash /opt/backups/backup.sh > /opt/backups/backup.log"
