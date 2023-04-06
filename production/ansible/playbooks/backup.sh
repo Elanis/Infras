@@ -35,7 +35,7 @@ function postgres-backup() {
                 echo "Backup finished !"
 
                 echo "Removing old backups ..."
-                find "/opt/backups/postgres/" -mtime +5 -exec rm {} \;
+                find "/opt/backups/postgres/" -type f -mtime +5 -exec rm {} \;
 
                 echo "Attributing owners/groups ..."
                 chown -R backup:backup /opt/backups/
