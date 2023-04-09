@@ -36,4 +36,4 @@
         minute: "30"
         hour: "{{ hostvars[inventory_hostname].postgres_backup_cron_hour }}"
         user: "root"
-        job: "bash /opt/backups/backup.sh > /opt/backups/backup.log"
+        job: "bash /opt/backups/backup.sh > /opt/backups/backup.log 2>&1"

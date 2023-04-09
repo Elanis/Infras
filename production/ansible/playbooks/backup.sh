@@ -10,7 +10,7 @@ function upload-backup() {
 }
 
 function postgres-backup() {
-        podName="$(kubectl get pods -n dysnomia-apps | grep '^postgres-' | awk '{print $1}')"
+        podName="$(/usr/local/bin/kubectl get pods -n dysnomia-apps | grep '^postgres-' | awk '{print $1}')"
 
         if [ "$1" != "" ]; then
                 if [ -d "/opt/backups/postgres/$1" ]; then
@@ -18,7 +18,7 @@ function postgres-backup() {
                         fileName="/opt/backups/postgres/$1/$simpleFileName"
                         echo "Backing-up $folder to $fileName"
 
-                        kubectl exec -n dysnomia-apps "$podName" -- pg_dump -U postgres -F c $folder > "$fileName"
+                        /usr/local/bin/kubectl exec -n dysnomia-apps "$podName" -- pg_dump -U postgres -F c $folder > "$fileName"
                         if [ "$(date '+%d')" == "01" ] || [ "$(date +%u)" == "2" ]; then
                                 echo -e "Uploading backup"
                                 upload-backup "$fileName" "/postgres/$folder/$simpleFileName"
