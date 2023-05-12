@@ -1,0 +1,12 @@
+---
+- hosts: private_ip[0]
+  become: yes
+
+  tasks:
+    - name: Setup CRON backup
+      ansible.builtin.cron:
+        name: "Run seafile garbage collection"
+        minute: "30"
+        hour: "0"
+        user: "root"
+        job: "/usr/local/bin/kubectl exec -ti -n seafile \"$(/usr/local/bin/kubectl get pods -n seafile | grep '^seafile-server-' | awk '{print $1}')\" -- bash /opt/seafile/seafile-server-latest/seaf-gc.sh > /var/log/seaf-gc.log 2>&1"
