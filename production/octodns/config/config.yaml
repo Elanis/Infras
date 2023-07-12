@@ -1,0 +1,79 @@
+---
+providers:
+  config:
+    class: octodns.provider.yaml.YamlProvider
+    directory: ./config
+    default_ttl: 3600
+    enforce_order: True
+
+  ovh:
+    class: octodns_ovh.OvhProvider
+    # OVH api v6 endpoint
+    endpoint: ovh-eu
+    # API application key
+    application_key: env/OVH_APPLICATION_KEY
+    # API application secret
+    application_secret: env/OVH_APPLICATION_SECRET
+    # API consumer key
+    consumer_key: env/OVH_CONSUMER_KEY
+
+zones:
+  achieve.games.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  dehash.me.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  downstat.us.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  dysnomia.studio.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  elanis.eu.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  elanis.fr.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  galactae.com.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  galactae.eu.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  galactae.space.:
+    sources:
+      - config
+    targets:
+      - ovh
+
+  gaspar.ovh.:
+    sources:
+      - config
+    targets:
+      - ovh

@@ -1,0 +1,24 @@
+---
+? ''
+: - ttl: 0
+    type: A
+    values:
+    - 138.201.58.15
+    - 51.75.131.105
+  - ttl: 0
+    type: AAAA
+    values:
+    - '2001:41d0:303:8a69::'
+    - 2a01:4f8:172:130e::2
+  - ttl: 0
+    type: NS
+    values:
+    - dns14.ovh.net.
+    - ns14.ovh.net.
+  - ttl: 0
+    type: TXT
+    value: google-site-verification=1qOXkWNQnNKvj3ATbIWCNhlAIQoEUUV5dOBv5Uvo1xw
+www:
+  ttl: 0
+  type: CNAME
+  value: downstat.us.

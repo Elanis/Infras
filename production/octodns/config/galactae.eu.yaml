@@ -1,0 +1,41 @@
+---
+? ''
+: - ttl: 0
+    type: A
+    values:
+    - 138.201.58.15
+    - 51.75.131.105
+  - ttl: 0
+    type: AAAA
+    values:
+    - '2001:41d0:303:8a69::'
+    - 2a01:4f8:172:130e::2
+  - type: MX
+    value:
+      exchange: mail.dysnomia.studio.
+      preference: 10
+  - type: NS
+    values:
+    - dns12.ovh.net.
+    - ns12.ovh.net.
+  - ttl: 600
+    type: TXT
+    values:
+    - 1|www.galactae.eu
+    - google-site-verification=ndEQd10aj8Fqzze7IPL1KGtKDsil5Ifn5EcDsVZ3WOA
+    - v=spf1 a:mail.elanis.eu -all
+'*':
+  ttl: 0
+  type: CNAME
+  value: galactae.eu.
+_dmarc:
+  type: TXT
+  value: v=DMARC1\; p=none\; rua=mailto:dmarc@galactae.eu\; ruf=mailto:dmarc@galactae.eu\;
+    sp=quarantine\; ri=86400
+mail._domainkey:
+  type: TXT
+  value: v=DKIM1\;h=sha256\;k=rsa\;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt5pYJjxXSarEV7iw6bhZI/GApVkQPTbbhmL6VU8QbcaMshMcqOakRbqDrJ/Zm2zCmAKjmMn/b6Idm3Lg78GZHpq0yGU1OIQabW18sqDhUveOlep31laXujSkWq88L19UXR4sEUiSjjIdLkVZEV3nNBlmh6waDoBFit5licdq2WWI+gcvHGOpSX/CQV0HRwdqQaIF1SzWlscMhf8YOaVKfHaBFgP2j4BZFO6tDLL5j/fzxzY7XOStBuTBeB6BQfCmWO3OmRo2NvZvJBg5T670GB4jrfGjRBS0OEGHvGWs4JJUT9MtmS5XXG8EjbpmiuSaffYtATs6oxKea2/bBUHH1QIDAQAB\;
+www:
+  ttl: 0
+  type: CNAME
+  value: galactae.eu.

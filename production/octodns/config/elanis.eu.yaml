@@ -1,0 +1,65 @@
+---
+? ''
+: - ttl: 0
+    type: A
+    values:
+    - 138.201.58.15
+    - 51.75.131.105
+  - ttl: 0
+    type: MX
+    values:
+    - exchange: mail.protonmail.ch.
+      preference: 10
+    - exchange: mailsec.protonmail.ch.
+      preference: 20
+  - ttl: 0
+    type: NS
+    values:
+    - dns110.ovh.net.
+    - ns110.ovh.net.
+  - ttl: 600
+    type: SPF
+    value: v=spf1 include:_spf.protonmail.ch mx ~all
+  - ttl: 600
+    type: TXT
+    values:
+    - protonmail-verification=85680000d0d9cdc39c2dd1164b0e4efb51790ce6
+    - v=spf1 include:_spf.protonmail.ch mx ~all
+_dmarc:
+  ttl: 0
+  type: TXT
+  value: v=DMARC1\; p=none
+cdn:
+  ttl: 0
+  type: CNAME
+  value: elanis.eu.
+cloud:
+- ttl: 0
+  type: A
+  value: 94.23.197.186
+- ttl: 0
+  type: AAAA
+  value: '2001:41d0:2:48ba::'
+files.cloud:
+- ttl: 0
+  type: A
+  value: 94.23.197.186
+- ttl: 0
+  type: AAAA
+  value: '2001:41d0:2:48ba::'
+protonmail2._domainkey:
+  ttl: 0
+  type: CNAME
+  value: protonmail2.domainkey.dow7ykiver4zlzq2dyohfdqqsp3kuol6ltpyuck4mhfrmrfruyiga.domains.proton.ch.
+protonmail3._domainkey:
+  ttl: 0
+  type: CNAME
+  value: protonmail3.domainkey.dow7ykiver4zlzq2dyohfdqqsp3kuol6ltpyuck4mhfrmrfruyiga.domains.proton.ch.
+protonmail._domainkey:
+  ttl: 0
+  type: CNAME
+  value: protonmail.domainkey.dow7ykiver4zlzq2dyohfdqqsp3kuol6ltpyuck4mhfrmrfruyiga.domains.proton.ch.
+www:
+  ttl: 0
+  type: CNAME
+  value: elanis.eu.
