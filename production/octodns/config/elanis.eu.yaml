@@ -25,14 +25,14 @@
     values:
     - protonmail-verification=85680000d0d9cdc39c2dd1164b0e4efb51790ce6
     - v=spf1 include:_spf.protonmail.ch mx ~all
-_dmarc:
-  ttl: 0
-  type: TXT
-  value: v=DMARC1\; p=none
 01.cdn:
   ttl: 0
   type: CNAME
   value: elanis.eu.
+_dmarc:
+  ttl: 0
+  type: TXT
+  value: v=DMARC1\; p=none
 cloud:
 - ttl: 0
   type: A
