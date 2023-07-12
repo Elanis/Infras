@@ -29,7 +29,7 @@ _dmarc:
   ttl: 0
   type: TXT
   value: v=DMARC1\; p=none
-cdn:
+01.cdn:
   ttl: 0
   type: CNAME
   value: elanis.eu.
