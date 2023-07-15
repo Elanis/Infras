@@ -63,3 +63,4 @@
         argocd repo add https://github.com/Dysnomia-Studio/argocd-infra.git --username {{ argocd_github_username }} --password {{ argocd_github_token }}
         argocd app create dysnomia-apps --repo https://github.com/Dysnomia-Studio/argocd-infra.git --path "." --dest-server https://kubernetes.default.svc --dest-namespace dysnomia-apps
         argocd app sync dysnomia-apps
+        argocd app set dysnomia-apps --sync-policy automated
