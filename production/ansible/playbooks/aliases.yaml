@@ -64,6 +64,16 @@
         insertafter=EOF
         create=True
 
+    - name: Add tmux-startup alias on servers
+      lineinfile:
+        path=/root/.bashrc
+        line="alias tmux-startup=\"tmux new-session \; split-window -h \; resize-pane -R 50 \; split-window -v \;  split-window -v \; select-pane -t 1 \; split-window -v \; select-pane -t 1 \; send-keys 'argocd-dashboard' C-m \; select-pane -t 2 \; send-keys 'grafana-dashboard' C-m \; select-pane -t 3 \; send-keys 'postgres-route' C-m \; select-pane -t 4 \; send-keys 'traefik-dashboard' C-m \; select-pane -t 0 \; \""
+        owner=root
+        regexp='^alias tmux-startup='
+        state=present
+        insertafter=EOF
+        create=True
+
     - name: Add traefik-dashboard alias on servers
       lineinfile:
         path=/root/.bashrc
