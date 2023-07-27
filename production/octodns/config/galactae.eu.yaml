@@ -10,10 +10,13 @@
     values:
     - '2001:41d0:303:8a69::'
     - 2a01:4f8:172:130e::2
-  - type: MX
-    value:
-      exchange: mail.dysnomia.studio.
+  - ttl: 0
+    type: MX
+    values:
+    - exchange: mail.protonmail.ch.
       preference: 10
+    - exchange: mailsec.protonmail.ch.
+      preference: 20
   - type: NS
     values:
     - dns12.ovh.net.
@@ -23,7 +26,8 @@
     values:
     - 1|www.galactae.eu
     - google-site-verification=ndEQd10aj8Fqzze7IPL1KGtKDsil5Ifn5EcDsVZ3WOA
-    - v=spf1 a:mail.elanis.eu -all
+    - protonmail-verification=d05fb1a3ce8f2158bf416f0b99bac2773dfcc91f
+    - v=spf1 include:_spf.protonmail.ch mx ~all
 '*':
   ttl: 0
   type: CNAME
