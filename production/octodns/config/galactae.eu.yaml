@@ -32,6 +32,10 @@
   ttl: 0
   type: CNAME
   value: galactae.eu.
+_dmarc:
+  ttl: 0
+  type: TXT
+  value: v=DMARC1\; p=none
 protonmail2._domainkey:
   ttl: 0
   type: CNAME
@@ -43,7 +47,7 @@ protonmail3._domainkey:
 protonmail._domainkey:
   ttl: 0
   type: CNAME
-  value: protonmail2.domainkey.du3tvjslt2bmloqphc7tacc6rp4tnysyrl3jcziichndkn2wbajba.domains.proton.ch.
+  value: protonmail.domainkey.du3tvjslt2bmloqphc7tacc6rp4tnysyrl3jcziichndkn2wbajba.domains.proton.ch.
 www:
   ttl: 0
   type: CNAME
