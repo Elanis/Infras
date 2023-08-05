@@ -67,6 +67,10 @@ cloud:
   ttl: 0
   type: CNAME
   value: dysnomia.studio.
+fz:
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 gitea:
 - type: A
   value: 94.23.197.186
