@@ -71,12 +71,6 @@ fz:
   ttl: 0
   type: CNAME
   value: dysnomia.studio.
-gitea:
-- type: A
-  value: 94.23.197.186
-- ttl: 0
-  type: AAAA
-  value: '2001:41d0:2:48ba::'
 helium:
 - ttl: 0
   type: A
