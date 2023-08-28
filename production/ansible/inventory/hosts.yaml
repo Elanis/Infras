@@ -25,6 +25,5 @@ all:
 
     postgres_backup_servers:
       hosts:
-        192.168.1.2:
         192.168.1.3:
         192.168.1.4:
