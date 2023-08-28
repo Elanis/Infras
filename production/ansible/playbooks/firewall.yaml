@@ -3,17 +3,34 @@
   become: true
   become_user: root
   tasks:
-    - name: Iptables flush filter
+    - name: Iptables flush filter (ipv4)
       iptables:
         chain: "{{ item }}"
         flush: yes
+        ip_version: ipv4
       with_items:  [ 'INPUT', 'FORWARD', 'OUTPUT' ]
 
-    - name: Iptables flush nat
+    - name: Iptables flush nat (ipv4)
       iptables:
         table: nat
         chain: '{{ item }}'
         flush: yes
+        ip_version: ipv4
+      with_items: [ 'INPUT', 'OUTPUT', 'PREROUTING', 'POSTROUTING' ]
+      
+    - name: Iptables flush filter (ipv6)
+      iptables:
+        chain: "{{ item }}"
+        flush: yes
+        ip_version: ipv6
+      with_items:  [ 'INPUT', 'FORWARD', 'OUTPUT' ]
+
+    - name: Iptables flush nat (ipv6)
+      iptables:
+        table: nat
+        chain: '{{ item }}'
+        flush: yes
+        ip_version: ipv6
       with_items: [ 'INPUT', 'OUTPUT', 'PREROUTING', 'POSTROUTING' ]
 
     - name: Allow all loopback traffic (INPUT)
@@ -22,6 +39,7 @@
         chain: INPUT
         in_interface: lo
         jump: ACCEPT
+        ip_version: ipv4
 
     - name: Allow all loopback traffic (FORWARD)
       iptables:
@@ -29,6 +47,23 @@
         chain: FORWARD
         in_interface: lo
         jump: ACCEPT
+        ip_version: ipv4
+
+    - name: Allow all loopback traffic (INPUT)
+      iptables:
+        action: append
+        chain: INPUT
+        in_interface: lo
+        jump: ACCEPT
+        ip_version: ipv4
+
+    - name: Allow all loopback traffic (FORWARD)
+      iptables:
+        action: append
+        chain: FORWARD
+        in_interface: lo
+        jump: ACCEPT
+        ip_version: ipv4
 
     - name: Allow all wireguard mesh network traffic (INPUT)
       iptables:
@@ -92,14 +127,14 @@
       iptables:
         chain: INPUT
         jump: ACCEPT
-        protocol: icmp
+        protocol: ipv6-icmp
         ip_version: ipv6
 
     - name: Allow ping traffic (OUTPUT) - ipv6
       iptables:
         chain: OUTPUT
         jump: ACCEPT
-        protocol: icmp
+        protocol: ipv6-icmp
         ip_version: ipv6        
 
     # SSH
@@ -109,13 +144,31 @@
         destination_port: '22'
         jump: ACCEPT
         protocol: tcp
+        ip_version: ipv4
 
     - name: Allow port 22/SSH traffic (OUTPUT)
       iptables:
         chain: OUTPUT
         destination_port: '22'
         jump: ACCEPT
-        protocol: tcp        
+        protocol: tcp
+        ip_version: ipv4     
+
+    - name: Allow port 22/SSH traffic (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '22'
+        jump: ACCEPT
+        protocol: tcp
+        ip_version: ipv6
+
+    - name: Allow port 22/SSH traffic (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '22'
+        jump: ACCEPT
+        protocol: tcp 
+        ip_version: ipv6  
 
     # FTP (to access to SoYouStart backup servers)
     - name: Allow port 21/FTP traffic (OUTPUT)
@@ -302,6 +355,7 @@
         destination_port: '51820'
         jump: ACCEPT
         protocol: udp 
+        ip_version: ipv4
 
     - name: Allow wireguard listener port (51820) (OUTPUT)
       iptables:
@@ -309,6 +363,23 @@
         destination_port: '51820'
         jump: ACCEPT
         protocol: udp
+        ip_version: ipv4
+
+    - name: Allow wireguard listener port (51820) (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '51820'
+        jump: ACCEPT
+        protocol: udp 
+        ip_version: ipv6
+
+    - name: Allow wireguard listener port (51820) (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '51820'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv6
 
     # K3S
     - name: Allow all traffic on 127.0.0.0/24
