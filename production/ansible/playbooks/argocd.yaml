@@ -4,11 +4,8 @@
   become: true
   become_user: root
   tasks:
-    - name: Remove old argocd namespace 
-      shell: kubectl delete namespace argocd || true
-
-    - name: Create argocd namespace 
-      command: kubectl create namespace argocd
+    - name: Create argocd namespace if not existing
+      command: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 
     - name: Create argocd pods
       command: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -50,7 +47,7 @@
       command: kubectl -n argocd delete secret argocd-initial-admin-secret
 
     - name: Create namespace if needed
-      shell:  kubectl create namespace dysnomia-apps || true
+      shell: kubectl create namespace dysnomia-apps --dry-run=client -o yaml | kubectl apply -f -
 
     - name: Grant access to Github Packages
       shell: |
