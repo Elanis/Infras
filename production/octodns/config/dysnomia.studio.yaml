@@ -85,6 +85,10 @@ lithium:
 - ttl: 0
   type: AAAA
   value: 2a01:4f8:172:130e::2
+m1:
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 mail:
   type: A
   value: 94.23.197.186
