@@ -30,12 +30,6 @@ zones:
     targets:
       - ovh
 
-  downstat.us.:
-    sources:
-      - config
-    targets:
-      - ovh
-
   dysnomia.studio.:
     sources:
       - config
