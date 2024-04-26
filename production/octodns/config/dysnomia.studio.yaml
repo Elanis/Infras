@@ -92,6 +92,10 @@ m1:
 mail:
   type: A
   value: 94.23.197.186
+n8n:
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 protonmail2._domainkey:
   ttl: 0
   type: CNAME
