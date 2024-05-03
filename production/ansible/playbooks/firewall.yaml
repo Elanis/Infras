@@ -194,7 +194,7 @@
         protocol: udp
 
     # Web - ipv4
-    - name: Allow port 80/HTTP traffic (INPUT) - ipv4
+    - name: Allow port 80/HTTP traffic (INPUT - ipv4 - tcp)
       iptables:
         chain: INPUT
         destination_port: '80'
@@ -202,7 +202,7 @@
         protocol: tcp
         ip_version: ipv4
 
-    - name: Allow port 80/HTTP traffic (OUTPUT) - ipv4
+    - name: Allow port 80/HTTP traffic (OUTPUT - ipv4 - tcp)
       iptables:
         chain: OUTPUT
         destination_port: '80'
@@ -210,7 +210,23 @@
         protocol: tcp
         ip_version: ipv4
 
-    - name: Allow port 443/HTTPS traffic (INPUT) - ipv4
+    - name: Allow port 80/HTTP traffic (INPUT - ipv4 - udp)
+      iptables:
+        chain: INPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv4
+
+    - name: Allow port 80/HTTP traffic (OUTPUT - ipv4 - udp)
+      iptables:
+        chain: OUTPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv4
+
+    - name: Allow port 443/HTTPS traffic (INPUT - ipv4 - tcp)
       iptables:
         chain: INPUT
         destination_port: '443'
@@ -218,16 +234,32 @@
         protocol: tcp
         ip_version: ipv4
 
-    - name: Allow port 443/HTTPS traffic (OUTPUT) - ipv4
+    - name: Allow port 443/HTTPS traffic (OUTPUT - ipv4 - tcp)
       iptables:
         chain: OUTPUT
         destination_port: '443'
         jump: ACCEPT
         protocol: tcp
+        ip_version: ipv4
+
+    - name: Allow port 443/HTTPS traffic (INPUT - ipv4 - udp)
+      iptables:
+        chain: INPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv4
+
+    - name: Allow port 443/HTTPS traffic (OUTPUT - ipv4 - udp)
+      iptables:
+        chain: OUTPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: udp
         ip_version: ipv4
 
     # Web - ipv6
-    - name: Allow port 80/HTTP traffic (INPUT) - ipv4
+    - name: Allow port 80/HTTP traffic (INPUT - ipv6 - tcp)
       iptables:
         chain: INPUT
         destination_port: '80'
@@ -235,7 +267,7 @@
         protocol: tcp
         ip_version: ipv6
 
-    - name: Allow port 80/HTTP traffic (OUTPUT)
+    - name: Allow port 80/HTTP traffic (OUTPUT - ipv6 - tcp)
       iptables:
         chain: OUTPUT
         destination_port: '80'
@@ -243,7 +275,23 @@
         protocol: tcp
         ip_version: ipv6
 
-    - name: Allow port 443/HTTPS traffic (INPUT)
+    - name: Allow port 80/HTTP traffic (INPUT - ipv6 - udp)
+      iptables:
+        chain: INPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv6
+
+    - name: Allow port 80/HTTP traffic (OUTPUT - ipv6 - udp)
+      iptables:
+        chain: OUTPUT
+        destination_port: '80'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv6
+
+    - name: Allow port 443/HTTPS traffic (INPUT - ipv6 - tcp)
       iptables:
         chain: INPUT
         destination_port: '443'
@@ -251,13 +299,30 @@
         protocol: tcp
         ip_version: ipv6
 
-    - name: Allow port 443/HTTPS traffic (OUTPUT)
+    - name: Allow port 443/HTTPS traffic (OUTPUT - ipv6 - tcp)
       iptables:
         chain: OUTPUT
         destination_port: '443'
         jump: ACCEPT
         protocol: tcp
         ip_version: ipv6
+
+    - name: Allow port 443/HTTPS traffic (INPUT - ipv6 - udp)
+      iptables:
+        chain: INPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv6
+
+    - name: Allow port 443/HTTPS traffic (OUTPUT - ipv6 - udp)
+      iptables:
+        chain: OUTPUT
+        destination_port: '443'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv6
+
 
     # Mail Server
     # Not opening 110 (POP3) / 995 (POP3S) as we don't use them
