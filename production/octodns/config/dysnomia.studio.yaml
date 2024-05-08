@@ -116,6 +116,10 @@ status:
   ttl: 0
   type: CNAME
   value: dysnomia-studio.github.io.
+wiki:
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 www:
   ttl: 0
   type: CNAME
