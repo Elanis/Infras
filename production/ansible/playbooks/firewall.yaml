@@ -2,6 +2,7 @@
   hosts: private_ip
   become: true
   become_user: root
+  serial: 1
   tasks:
     - name: Iptables flush filter (ipv4)
       iptables:
