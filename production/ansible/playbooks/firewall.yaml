@@ -446,6 +446,38 @@
         protocol: udp
         ip_version: ipv6
 
+    - name: Allow wireguard listener port (51830) (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '51830'
+        jump: ACCEPT
+        protocol: udp 
+        ip_version: ipv4
+
+    - name: Allow wireguard listener port (51830) (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '51830'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv4
+
+    - name: Allow wireguard listener port (51830) (INPUT)
+      iptables:
+        chain: INPUT
+        destination_port: '51830'
+        jump: ACCEPT
+        protocol: udp 
+        ip_version: ipv6
+
+    - name: Allow wireguard listener port (51830) (OUTPUT)
+      iptables:
+        chain: OUTPUT
+        destination_port: '51830'
+        jump: ACCEPT
+        protocol: udp
+        ip_version: ipv6
+
     # K3S
     - name: Allow all traffic on 127.0.0.0/24
       iptables:
