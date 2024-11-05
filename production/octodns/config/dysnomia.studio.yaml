@@ -32,10 +32,14 @@
   ttl: 0
   type: CNAME
   value: dysnomia.studio.
-_dmarc:
+discord:
   ttl: 0
   type: TXT
   value: v=DMARC1\; p=none
+_dmarc:
+  ttl: 0
+  type: TXT
+  value: dh=ced56c4489ad0f0bce4556f6430c19a3ecfbdb66
 _github-challenge-dysnomia-studio:
   ttl: 0
   type: TXT
