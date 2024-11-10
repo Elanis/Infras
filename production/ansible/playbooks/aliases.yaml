@@ -17,7 +17,7 @@
     - name: Add kube-oldest-pods alias on servers
       lineinfile:
         path=/root/.bashrc
-        line="alias kube-oldest-pods=\"kubectl get pods --all-namespaces --sort-by=.metadata.creationTimestamp | grep -v kube-system | grep -v longhorn-system | head -n 20\""
+        line="alias kube-oldest-pods=\"kubectl get pods --all-namespaces --sort-by=.metadata.creationTimestamp | head -n 20\""
         owner=root
         regexp='^alias kube-oldest-pods='
         state=present
