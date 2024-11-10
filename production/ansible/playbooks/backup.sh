@@ -4,11 +4,6 @@
 # Make the script stop if any error happen:
 set -e
 
-function upload-backup() {
-	# TODO
-	echo "_"
-}
-
 function postgres-backup() {
         podName="$(/usr/local/bin/kubectl get pods -n dysnomia-apps | grep '^postgres-' | awk '{print $1}')"
 
@@ -19,10 +14,6 @@ function postgres-backup() {
                         echo "Backing-up $folder to $fileName"
 
                         /usr/local/bin/kubectl exec -n dysnomia-apps "$podName" -- pg_dump -U postgres -F c $folder > "$fileName"
-                        if [ "$(date '+%d')" == "01" ] || [ "$(date +%u)" == "2" ]; then
-                                echo -e "Uploading backup"
-                                upload-backup "$fileName" "/postgres/$folder/$simpleFileName"
-                        fi
                 fi
         else
                 echo "Full Postgres backup initiated ..."
