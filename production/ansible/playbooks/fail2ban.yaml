@@ -15,3 +15,8 @@
       owner: root
       group: root
       mode: '0644'
+  - name: Restart fail2ban service
+    ansible.builtin.service:
+      name: fail2ban
+      state: restarted
+      enabled: yes
