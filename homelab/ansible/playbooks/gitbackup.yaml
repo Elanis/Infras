@@ -1,0 +1,83 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Create a backup user
+      user:
+        name: gitbackup
+        groups:
+         - gitbackup
+        state: present
+        shell: /bin/bash
+        system: no
+        createhome: yes
+        home: /home/gitbackup
+
+    - name: Copy keys/
+      ansible.builtin.copy:
+        src: files/keys/
+        dest: /home/gitbackup/keys/
+        owner: gitbackup
+        group: gitbackup
+        directory_mode: yes
+        mode: 0700
+
+    - name: "TEMP: Delete the _scripts directory"
+      ansible.builtin.file:
+        state: absent
+        path: /home/gitbackup/_scripts
+
+    - name: Get _scripts from github
+      ansible.builtin.git:
+        repo: 'git@github.com:Elanis/backup-git-repositories.git'
+        dest: /home/gitbackup/_scripts
+        key_file: /home/gitbackup/keys/id_ed25519
+      become: yes
+      become_user: gitbackup
+
+    - name: Copy backup.cfg
+      ansible.builtin.copy:
+        src: files/backup.cfg
+        dest: /home/gitbackup/_scripts/backup.cfg
+        owner: gitbackup
+        group: gitbackup
+        mode: 0644
+
+    - name: Ensure _scripts owner/perms are right
+      ansible.builtin.file:
+        path: /home/gitbackup/_scripts
+        state: directory
+        owner: gitbackup
+        group: gitbackup
+        mode: 0700
+        recurse: true
+
+    - name: Ensure keys owner/perms are right
+      ansible.builtin.file:
+        path: /home/gitbackup/keys
+        state: directory
+        owner: gitbackup
+        group: gitbackup
+        mode: 0700
+        recurse: true
+
+    - name: Set gitbackup MAILTO
+      community.general.cronvar:
+        name: MAILTO
+        value: elNASnis@elanis.eu
+        user: gitbackup
+
+    - name: Set gitbackup MAILFROM
+      community.general.cronvar:
+        name: MAILFROM
+        value: gitbackup@elanis.eu
+        user: gitbackup
+
+    - name: Setup CRON backup
+      ansible.builtin.cron:
+        name: "Run git backup"
+        minute: "0"
+        hour: "0"
+        user: "gitbackup"
+        job: "bash /home/gitbackup/_scripts/backup.sh > /home/gitbackup/backup.log"

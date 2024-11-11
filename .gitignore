@@ -1,3 +1,4 @@
 **/crypted
 production/ansible/playbooks/defaults-debian.conf
 production/ansible/playbooks/pgbackrest.conf
+homelab/ansible/playbooks/files/
