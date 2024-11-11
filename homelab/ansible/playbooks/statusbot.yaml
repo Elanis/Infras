@@ -1,0 +1,70 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Create a statusbot user
+      user:
+        name: statusbot
+        groups:
+         - statusbot
+        state: present
+        shell: /bin/bash
+        system: no
+        createhome: yes
+        home: /home/statusbot
+
+    - name: Copy keys/
+      ansible.builtin.copy:
+        src: files/keys/
+        dest: /home/statusbot/keys/
+        owner: statusbot
+        group: statusbot
+        directory_mode: yes
+        mode: 0700
+
+    - name: "TEMP: Delete the status directory"
+      ansible.builtin.file:
+        state: absent
+        path: /home/statusbot/status
+
+    - name: Get status from github
+      ansible.builtin.git:
+        repo: 'git@github.com:Dysnomia-Studio/status.git'
+        dest: /home/statusbot/status
+        key_file: /home/statusbot/keys/id_ed25519
+        force: true
+        update: true
+      become: yes
+      become_user: statusbot
+
+    - name: Copy custom-setup.sh
+      ansible.builtin.copy:
+        src: files/statusbot-custom-setup.sh
+        dest: /home/statusbot/status/custom-setup.sh
+        owner: statusbot
+        group: statusbot
+        mode: 0700
+
+    - name: Ensure status owner/perms are right
+      ansible.builtin.file:
+        path: /home/statusbot/status
+        state: directory
+        owner: statusbot
+        group: statusbot
+        mode: 0700
+        recurse: true
+
+    #- name: Set statusbot MAILTO
+    #  community.general.cronvar:
+    #    name: MAILTO
+    #    value: ""
+    #    user: statusbot
+
+    - name: Setup CRON backup
+      ansible.builtin.cron:
+        name: "Run git backup"
+        minute: "*"
+        hour: "*"
+        user: "statusbot"
+        job: "bash /home/statusbot/status/monitore.sh > /home/statusbot/monitore.log"
