@@ -40,20 +40,6 @@ _dmarc:
   ttl: 0
   type: TXT
   value: v=DMARC1\; p=none
-cloud:
-- ttl: 0
-  type: A
-  value: 94.23.197.186
-- ttl: 0
-  type: AAAA
-  value: '2001:41d0:2:48ba::'
-files.cloud:
-- ttl: 0
-  type: A
-  value: 94.23.197.186
-- ttl: 0
-  type: AAAA
-  value: '2001:41d0:2:48ba::'
 protonmail2._domainkey:
   ttl: 0
   type: CNAME
