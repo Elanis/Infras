@@ -1,2 +1,0 @@
-ansible_become_pass: "{{ vaulted_become_pass }}"
-postgres_backup_cron_hour: "{{ vaulted_postgres_backup_cron_hour }}"
