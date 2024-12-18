@@ -4,8 +4,8 @@
   become: true
   become_user: root
   tasks:
-    - name: Create argocd namespace if not existing
-      command: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+    - name: Create argocd namespace
+      command: kubectl create namespace argocd
 
     - name: Create argocd pods
       command: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -23,10 +23,10 @@
       until: list_running_pods.stdout_lines | list | count == 1
 
     - name: Wait for pods to start (Replicas)
-      shell: kubectl get pods -n argocd | grep "0/1"
+      shell: kubectl get pods -n argocd | grep "1/1"
       register: list_running_replicas
       retries: 10
-      until: list_running_replicas.stdout_lines | list | count == 1
+      until: list_running_replicas.stdout_lines | list | count == 7
 
     - name: Temporary enable port-forwarding
       command: kubectl port-forward svc/argocd-server -n argocd 8080:443
