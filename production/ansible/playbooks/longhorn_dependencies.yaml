@@ -1,0 +1,15 @@
+---
+- name: Check every dependency is installed
+  hosts: private_ip
+  become: true
+  become_user: root
+  tasks:
+  - name: Update apt repo and cache on all servers
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+  - name: Install tools
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - open-iscsi
