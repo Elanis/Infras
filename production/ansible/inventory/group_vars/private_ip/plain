@@ -12,3 +12,6 @@ argocd_admin_password: "{{ vaulted_argocd_admin_password }}"
 argocd_github_username: "{{ vaulted_argocd_github_username }}"
 argocd_github_token: "{{ vaulted_argocd_github_token }}"
 argocd_github_mail: "{{ vaulted_argocd_github_mail }}"
+
+# Hashicorp vault
+hashicorp_vault_keys: "{{ vaulted_hashicorp_vault_keys }}"
