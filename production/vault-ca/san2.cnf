@@ -1,0 +1,22 @@
+[ req ]
+distinguished_name = req_distinguished_name
+req_extensions     = v3_req
+prompt             = no
+
+[ req_distinguished_name ]
+countryName                = FR
+stateOrProvinceName        = Hauts de France
+localityName               = Calais
+organizationName           = Dysnomia
+commonName                 = Vault
+
+[v3_req]
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = *.vault-internal
+DNS.2 = *.vault.svc
+DNS.3 = *.vault.svc.cluster.local
+IP.1  = 127.0.0.1
