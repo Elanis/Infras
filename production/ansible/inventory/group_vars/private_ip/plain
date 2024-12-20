@@ -12,7 +12,3 @@ argocd_admin_password: "{{ vaulted_argocd_admin_password }}"
 argocd_github_username: "{{ vaulted_argocd_github_username }}"
 argocd_github_token: "{{ vaulted_argocd_github_token }}"
 argocd_github_mail: "{{ vaulted_argocd_github_mail }}"
-
-# Postgres
-postgres_admin_username: "{{ vaulted_postgres_admin_username }}"
-postgres_admin_password: "{{ vaulted_postgres_admin_password }}"
