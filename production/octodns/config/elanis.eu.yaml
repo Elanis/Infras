@@ -36,6 +36,10 @@
   ttl: 0
   type: CNAME
   value: elanis.eu.
+_atproto:
+  ttl: 0
+  type: TXT
+  value: did=did:plc:eeelvuw2ecigd2ltjjdor47m
 _dmarc:
   ttl: 0
   type: TXT
