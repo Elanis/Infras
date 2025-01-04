@@ -61,10 +61,6 @@ blog:
   ttl: 0
   type: CNAME
   value: dysnomia-studio.github.io.
-bore:
-  ttl: 0
-  type: A
-  value: 140.238.215.61
 bugs:
   ttl: 0
   type: CNAME
