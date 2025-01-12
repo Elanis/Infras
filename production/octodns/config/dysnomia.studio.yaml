@@ -30,10 +30,6 @@
     - google-site-verification=Ygf2n9qWhHEWR1d8kYayfaS91qLFj2H3wexLXvsHrU0
     - protonmail-verification=1c6c3ffc03087a7d17a7622423d3692d93815e0d
     - v=spf1 include:_spf.protonmail.ch mx ~all
-'*.manufacturinc':
-  ttl: 0
-  type: CNAME
-  value: dysnomia.studio.
 _discord:
   ttl: 0
   type: TXT
@@ -115,6 +111,10 @@ oxygen:
 - ttl: 0
   type: AAAA
   value: '2a01:4f8:151:64ec::'
+'prd.manufacturinc':
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 protonmail2._domainkey:
   ttl: 0
   type: CNAME
@@ -127,6 +127,19 @@ protonmail._domainkey:
   ttl: 0
   type: CNAME
   value: protonmail.domainkey.ducgpwqr2eyjqai73ymbh53s34wsmrkkidsbiaakuh2qa3f6yjraa.domains.proton.ch.
+'ptb.manufacturinc':
+  - ttl: 0
+    type: A
+    values:
+    - 188.165.200.10
+    - 37.187.74.34
+    - 176.9.116.19
+  - ttl: 0
+    type: AAAA
+    values:
+    - '2001:41d0:2:910a::1'
+    - '2001:41d0:a:2a22::1'
+    - '2a01:4f8:151:64ec::'
 sonar:
   ttl: 0
   type: CNAME
