@@ -3,15 +3,15 @@
 : - ttl: 0
     type: A
     values:
-    - 94.23.197.186
-    - 138.201.58.15
-    - 51.75.131.105
+    - 188.165.200.10
+    - 37.187.74.34
+    - 176.9.116.19
   - ttl: 0
     type: AAAA
     values:
-    - '2001:41d0:2:48ba::'
-    - '2001:41d0:303:8a69::'
-    - 2a01:4f8:172:130e::2
+    - '2001:41d0:2:910a::1'
+    - '2001:41d0:a:2a22::1'
+    - '2a01:4f8:151:64ec::'
   - ttl: 0
     type: MX
     values:
@@ -45,7 +45,7 @@ _github-challenge-dysnomia-studio:
 alchemistry-leaderboard:
   ttl: 0
   type: CNAME
-  value: dysnomia.studio.
+  value: old.dysnomia.studio.
 beryllium:
 - ttl: 0
   type: A
@@ -60,7 +60,7 @@ blog:
 bugs:
   ttl: 0
   type: CNAME
-  value: dysnomia.studio.
+  value: old.dysnomia.studio.
 carbon:
 - ttl: 0
   type: A
@@ -71,11 +71,11 @@ carbon:
 cloud:
   ttl: 0
   type: CNAME
-  value: dysnomia.studio.
+  value: old.dysnomia.studio.
 fz:
   ttl: 0
   type: CNAME
-  value: dysnomia.studio.
+  value: old.dysnomia.studio.
 helium:
 - ttl: 0
   type: A
@@ -96,7 +96,7 @@ mail:
 n8n:
   ttl: 0
   type: CNAME
-  value: dysnomia.studio.
+  value: old.dysnomia.studio.
 nitrogen:
 - ttl: 0
   type: A
@@ -104,6 +104,19 @@ nitrogen:
 - ttl: 0
   type: AAAA
   value: '2001:41d0:a:2a22::1'
+old:
+  - ttl: 0
+    type: A
+    values:
+    - 94.23.197.186
+    - 138.201.58.15
+    - 51.75.131.105
+  - ttl: 0
+    type: AAAA
+    values:
+    - '2001:41d0:2:48ba::'
+    - '2001:41d0:303:8a69::'
+    - 2a01:4f8:172:130e::2
 oxygen:
 - ttl: 0
   type: A
@@ -114,7 +127,7 @@ oxygen:
 'prd.manufacturinc':
   ttl: 0
   type: CNAME
-  value: dysnomia.studio.
+  value: old.dysnomia.studio.
 protonmail2._domainkey:
   ttl: 0
   type: CNAME
@@ -128,22 +141,13 @@ protonmail._domainkey:
   type: CNAME
   value: protonmail.domainkey.ducgpwqr2eyjqai73ymbh53s34wsmrkkidsbiaakuh2qa3f6yjraa.domains.proton.ch.
 'ptb.manufacturinc':
-  - ttl: 0
-    type: A
-    values:
-    - 188.165.200.10
-    - 37.187.74.34
-    - 176.9.116.19
-  - ttl: 0
-    type: AAAA
-    values:
-    - '2001:41d0:2:910a::1'
-    - '2001:41d0:a:2a22::1'
-    - '2a01:4f8:151:64ec::'
-sonar:
   ttl: 0
   type: CNAME
   value: dysnomia.studio.
+sonar:
+  ttl: 0
+  type: CNAME
+  value: old.dysnomia.studio.
 status:
   ttl: 0
   type: CNAME
