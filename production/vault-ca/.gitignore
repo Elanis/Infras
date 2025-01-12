@@ -1,6 +1,0 @@
-rootCA.crt
-rootCA.key
-rootCA.srl
-vault-tls-cert.crt
-vault-tls-cert.csr
-vault-tls-cert.key
