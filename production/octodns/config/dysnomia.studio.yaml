@@ -45,7 +45,7 @@ _github-challenge-dysnomia-studio:
 alchemistry-leaderboard:
   ttl: 0
   type: CNAME
-  value: old.dysnomia.studio.
+  value: dysnomia.studio.
 beryllium:
 - ttl: 0
   type: A
