@@ -60,7 +60,7 @@ blog:
 bugs:
   ttl: 0
   type: CNAME
-  value: old.dysnomia.studio.
+  value: dysnomia.studio.
 carbon:
 - ttl: 0
   type: A
