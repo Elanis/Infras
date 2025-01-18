@@ -147,7 +147,7 @@ protonmail._domainkey:
 sonar:
   ttl: 0
   type: CNAME
-  value: old.dysnomia.studio.
+  value: dysnomia.studio.
 status:
   ttl: 0
   type: CNAME
