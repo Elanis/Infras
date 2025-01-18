@@ -1,0 +1,10 @@
+---
+- name: Check elasticsearch prerequistes
+  hosts: private_ip
+  become: true
+  become_user: root
+  tasks:
+  - name: set vm.max_map_count to 262144 in sysctl
+    sysctl: name={{ item.key }} value={{ item.value }}
+    with_items:
+      - { key: "vm.max_map_count", value: "262144" }
