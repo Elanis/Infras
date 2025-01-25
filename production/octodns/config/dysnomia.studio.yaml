@@ -127,7 +127,7 @@ oxygen:
 'prd.manufacturinc':
   ttl: 0
   type: CNAME
-  value: old.dysnomia.studio.
+  value: dysnomia.studio.
 protonmail2._domainkey:
   ttl: 0
   type: CNAME
