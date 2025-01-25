@@ -93,10 +93,6 @@ lithium:
 mail:
   type: A
   value: 94.23.197.186
-n8n:
-  ttl: 0
-  type: CNAME
-  value: old.dysnomia.studio.
 nitrogen:
 - ttl: 0
   type: A
