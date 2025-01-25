@@ -90,9 +90,6 @@ lithium:
 - ttl: 0
   type: AAAA
   value: 2a01:4f8:172:130e::2
-mail:
-  type: A
-  value: 94.23.197.186
 nitrogen:
 - ttl: 0
   type: A
