@@ -71,7 +71,7 @@ carbon:
 cloud:
   ttl: 0
   type: CNAME
-  value: old.dysnomia.studio.
+  value: dysnomia.studio.
 fz:
   ttl: 0
   type: CNAME
