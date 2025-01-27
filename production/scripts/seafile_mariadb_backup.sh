@@ -1,0 +1,1 @@
+kubectl exec -ti -n seafile seafile-mariadb-ID -- mariadb-dump -u root -p"PASSWORD" --all-databases > seafilebackup.dump

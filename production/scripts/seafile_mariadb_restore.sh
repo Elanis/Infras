@@ -1,0 +1,1 @@
+cat seafilebackup.dump | kubectl exec -i -n seafile seafile-mariadb-ID -- mariadb -uroot -p"PASSWORD"
