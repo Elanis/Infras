@@ -24,11 +24,16 @@
 
     - name: Copy backup.sh
       ansible.builtin.copy:
-        src: backup.sh
-        dest: /opt/backups/backup.sh
+        src: ../../scripts/postgres_backup.sh
+        dest: /opt/backups/postgres_backup.sh
         owner: backup
         group: backup
         mode: 0700
+
+    - name: Install cron
+      ansible.builtin.package:
+        name: cron
+        state: present
 
     - name: Setup CRON backup
       ansible.builtin.cron:
@@ -36,4 +41,4 @@
         minute: "30"
         hour: "{{ hostvars[inventory_hostname].postgres_backup_cron_hour }}"
         user: "root"
-        job: "bash /opt/backups/backup.sh > /opt/backups/backup.log 2>&1"
+        job: "bash /opt/backups/postgres_backup.sh > /opt/backups/backup.log 2>&1"

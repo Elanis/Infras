@@ -5,15 +5,19 @@
 set -e
 
 function postgres-backup() {
-        podName="$(/usr/local/bin/kubectl get pods -n dysnomia-apps | grep '^postgres-' | awk '{print $1}')"
-
         if [ "$1" != "" ]; then
                 if [ -d "/opt/backups/postgres/$1" ]; then
                         simpleFileName="$( date '+%Y-%m-%d_%H-%M-%S' ).dump"
                         fileName="/opt/backups/postgres/$1/$simpleFileName"
                         echo "Backing-up $folder to $fileName"
 
-                        /usr/local/bin/kubectl exec -n dysnomia-apps "$podName" -- pg_dump -U postgres -F c $folder > "$fileName"
+                        if [ "$1" = "galactae" ]; then
+                                /usr/local/bin/kubectl exec -n galactae galactae-main-database-1 -- pg_dump -U postgres -F c galactae-main > "/opt/backups/postgres/$1/galactae-main-$simpleFileName"
+                                /usr/local/bin/kubectl exec -n galactae galactae-00-database-1 -- pg_dump -U postgres -F c galactae-00 > "/opt/backups/postgres/$1/galactae-00-$simpleFileName"
+                                /usr/local/bin/kubectl exec -n galactae galactae-01-database-1 -- pg_dump -U postgres -F c galactae-01 > "/opt/backups/postgres/$1/galactae-01-$simpleFileName"
+                        else
+                                /usr/local/bin/kubectl exec -n "$1" "$1-database-1" -- pg_dump -U postgres -F c $folder > "$fileName"
+                        fi
                 fi
         else
                 echo "Full Postgres backup initiated ..."
