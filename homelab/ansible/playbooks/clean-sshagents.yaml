@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    #- name: Set statusbot MAILTO
+    #  community.general.cronvar:
+    #    name: MAILTO
+    #    value: ""
+    #    user: statusbot
+
+    - name: Clean ssh-agent process created by various jobs (Temp fix while I don't fix all the bash scripts)
+      ansible.builtin.cron:
+        name: "Clean ssh-agent process created by various jobs (Temp fix while I don't fix all the bash scripts)"
+        minute: "0"
+        hour: "12"
+        user: "root"
+        job: "killall --older-than 1h ssh-agent"
