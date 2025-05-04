@@ -65,6 +65,10 @@ cloud:
   ttl: 0
   type: CNAME
   value: dysnomia.studio.
+m1:
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 nitrogen:
 - ttl: 0
   type: A
