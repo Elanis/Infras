@@ -1,4 +1,4 @@
 ansible_become_pass: "{{ vaulted_become_pass }}"
 postgres_backup_cron_hour: "{{ vaulted_postgres_backup_cron_hour }}"
 node_ips: "192.168.1.8,fd00:cafe:aaaa::8"
-node_external_ips: "176.9.116.19,2a01:4f8:151:64ec::"
+node_external_ips: "176.9.116.19,2a01:4f8:151:64ec::2"
