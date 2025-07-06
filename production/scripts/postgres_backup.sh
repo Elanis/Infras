@@ -13,7 +13,7 @@ function postgres-backup() {
 
                         if [ "$1" = "galactae" ]; then
                                 /usr/local/bin/kubectl exec -n galactae galactae-main-database-1 -- pg_dump -U postgres -F c galactae-main > "/opt/backups/postgres/$1/galactae-main-$simpleFileName"
-                                /usr/local/bin/kubectl exec -n galactae galactae-00-database-1 -- pg_dump -U postgres -F c galactae-00 > "/opt/backups/postgres/$1/galactae-00-$simpleFileName"
+                                /usr/local/bin/kubectl exec -n galactae galactae-00-database-2 -- pg_dump -U postgres -F c galactae-00 > "/opt/backups/postgres/$1/galactae-00-$simpleFileName"
                                 /usr/local/bin/kubectl exec -n galactae galactae-01-database-1 -- pg_dump -U postgres -F c galactae-01 > "/opt/backups/postgres/$1/galactae-01-$simpleFileName"
                         else
                                 podName=$(/usr/local/bin/kubectl get pods -n "$1" | grep "^$1-database-" | head -n 1 | awk '{print $1}')
