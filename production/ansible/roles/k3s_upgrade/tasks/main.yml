@@ -60,9 +60,9 @@
         daemon_reload: true
         name: k3s
 
-    - name: Restart K3s service [agent]
-      when: "agent_group in group_names"
-      ansible.builtin.systemd:
-        state: restarted
-        daemon_reload: true
-        name: k3s-agent
+    #- name: Restart K3s service [agent]
+    #  when: "agent_group in group_names"
+    #  ansible.builtin.systemd:
+    #    state: restarted
+    #    daemon_reload: true
+    #    name: k3s-agent
