@@ -49,7 +49,7 @@ alchemistry-leaderboard:
 blog:
   ttl: 0
   type: CNAME
-  value: dysnomia-studio.github.io.
+  value: dysnomia.studio.
 bugs:
   ttl: 0
   type: CNAME
