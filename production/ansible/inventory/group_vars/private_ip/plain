@@ -2,7 +2,7 @@ ansible_user: "{{ vaulted_ansible_user }}"
 
 # K3S config
 token: "{{ vaulted_k3s_token }}"
-k3s_version: "v1.33.2+k3s1"
+k3s_version: "v1.33.3+k3s1"
 extra_server_args: '--flannel-iface=wg0 --flannel-ipv6-masq --cluster-cidr=10.42.0.0/16,fd00:cafe:42::/56 --service-cidr=10.43.0.0/16,fd00:cafe:43::/112 --node-ip={{ node_ips }}'
 user_kubectl: false
 api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
