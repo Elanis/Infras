@@ -24,12 +24,6 @@ zones:
     targets:
       - ovh
 
-  dehash.me.:
-    sources:
-      - config
-    targets:
-      - ovh
-
   dysnomia.studio.:
     sources:
       - config
