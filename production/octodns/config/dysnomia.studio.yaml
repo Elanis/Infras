@@ -65,6 +65,10 @@ cloud:
   ttl: 0
   type: CNAME
   value: dysnomia.studio.
+discord:
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 leaderboard:
   ttl: 0
   type: CNAME
