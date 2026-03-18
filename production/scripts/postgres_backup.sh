@@ -12,9 +12,14 @@ function postgres-backup() {
                         echo "Backing-up $folder to $fileName"
 
                         if [ "$1" = "galactae" ]; then
-                                /usr/local/bin/kubectl exec -n galactae galactae-main-database-2 -- pg_dump -U postgres -F c galactae-main > "/opt/backups/postgres/$1/galactae-main-$simpleFileName"
-                                /usr/local/bin/kubectl exec -n galactae galactae-00-database-2 -- pg_dump -U postgres -F c galactae-00 > "/opt/backups/postgres/$1/galactae-00-$simpleFileName"
-                                /usr/local/bin/kubectl exec -n galactae galactae-01-database-1 -- pg_dump -U postgres -F c galactae-01 > "/opt/backups/postgres/$1/galactae-01-$simpleFileName"
+                                podName=$(/usr/local/bin/kubectl get pods -n galactae | grep "^galactae-main-database-" | head -n 1 | awk '{print $1}')
+                                /usr/local/bin/kubectl exec -n galactae "$podName" -- pg_dump -U postgres -F c galactae-main > "/opt/backups/postgres/$1/galactae-main-$simpleFileName"
+
+                                podName=$(/usr/local/bin/kubectl get pods -n galactae | grep "^galactae-00-database-" | head -n 1 | awk '{print $1}')
+                                /usr/local/bin/kubectl exec -n galactae "$podName" -- pg_dump -U postgres -F c galactae-00 > "/opt/backups/postgres/$1/galactae-00-$simpleFileName"
+                                
+                                podName=$(/usr/local/bin/kubectl get pods -n galactae | grep "^galactae-01-database-" | head -n 1 | awk '{print $1}')
+                                /usr/local/bin/kubectl exec -n galactae "$podName" -- pg_dump -U postgres -F c galactae-01 > "/opt/backups/postgres/$1/galactae-01-$simpleFileName"
                         else
                                 podName=$(/usr/local/bin/kubectl get pods -n "$1" | grep "^$1-database-" | head -n 1 | awk '{print $1}')
                                 echo "Found pod: $podName"
