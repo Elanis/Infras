@@ -111,6 +111,10 @@ sonar:
   ttl: 0
   type: CNAME
   value: dysnomia.studio.
+sso:
+  ttl: 0
+  type: CNAME
+  value: dysnomia.studio.
 status:
   ttl: 0
   type: CNAME
