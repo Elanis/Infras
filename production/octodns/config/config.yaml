@@ -18,12 +18,6 @@ providers:
     consumer_key: env/OVH_CONSUMER_KEY
 
 zones:
-  achieve.games.:
-    sources:
-      - config
-    targets:
-      - ovh
-
   dysnomia.studio.:
     sources:
       - config
