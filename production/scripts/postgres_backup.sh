@@ -20,8 +20,12 @@ function postgres-backup() {
                                 
                                 podName=$(/usr/local/bin/kubectl get pods -n galactae | grep "^galactae-01-database-" | head -n 1 | awk '{print $1}')
                                 /usr/local/bin/kubectl exec -n galactae "$podName" -- pg_dump -U postgres -F c galactae-01 > "/opt/backups/postgres/$1/galactae-01-$simpleFileName"
-                        else
-                                podName=$(/usr/local/bin/kubectl get pods -n "$1" | grep "^$1-database-" | head -n 1 | awk '{print $1}')
+                        elif [ "$1" = "authentik" ]; then
+                                podName=$(/usr/local/bin/kubectl get pods -n "authentik-app" | grep "database" | head -n 1 | awk '{print $1}')
+                                echo "Found pod: $podName"
+                                /usr/local/bin/kubectl exec -n "authentik-app" "$podName" -- pg_dump -U postgres -F c $folder > "$fileName"
+                        else 
+                                podName=$(/usr/local/bin/kubectl get pods -n "$1" | grep "database" | head -n 1 | awk '{print $1}') 
                                 echo "Found pod: $podName"
                                 /usr/local/bin/kubectl exec -n "$1" "$podName" -- pg_dump -U postgres -F c $folder > "$fileName"
                         fi
